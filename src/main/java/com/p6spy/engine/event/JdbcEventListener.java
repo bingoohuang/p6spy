@@ -86,10 +86,7 @@ public abstract class JdbcEventListener {
    * {@link ConnectionInformation#pooledConnection}.
    *
    * @param connectionInformation The meta information about the wrapped {@link Connection}
-   *
-   * @deprecated Use {@link #onAfterGetConnection(ConnectionInformation, SQLException)}
    */
-  @Deprecated
   public void onConnectionWrapped(ConnectionInformation connectionInformation) {
   }
 

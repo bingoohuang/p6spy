@@ -1,14 +1,14 @@
 /**
  * P6Spy
- *
+ * <p>
  * Copyright (C) 2002 P6Spy
- *
+ * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -31,9 +31,10 @@ public class SystemProperties implements P6OptionsSource {
 
   @Override
   public Map<String, String> getOptions() {
-    final Map<String, String> result = new HashMap<String, String>();
+    final HashMap<String, String> result = new HashMap<String, String>();
 
-    for (Entry<Object, Object> entry : new HashSet<Entry>(((Properties) System.getProperties().clone()).entrySet())) {
+    Properties clone = (Properties) System.getProperties().clone();
+    for (Entry<Object, Object> entry : new HashSet<Entry>(clone.entrySet())) {
       final String key = entry.getKey().toString();
       if (key.startsWith(P6SPY_PREFIX)) {
         result.put(key.substring(P6SPY_PREFIX.length()), (String) entry.getValue());

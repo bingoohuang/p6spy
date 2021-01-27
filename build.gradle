@@ -1,7 +1,6 @@
 plugins {
     id 'java'
     id 'jacoco'
-    id 'maven'
     id 'maven-publish'
     id 'distribution'
 
@@ -58,7 +57,7 @@ javadoc.options.encoding = 'UTF8'
 
 dependencies {
 
-  testCompile 'p6spy:p6spy-signedjar-test:1.0.0'
+  testImplementation 'p6spy:p6spy-signedjar-test:1.0.0'
 
   // for providing misc *-nodep artifacts, please note that order matters here
   // even if slf4j complains about multiple implementations on classpath, it takes the 1.st one
@@ -66,9 +65,9 @@ dependencies {
   compileOnly 'org.slf4j:slf4j-api:1.7.25'
   compileOnly 'org.slf4j:slf4j-log4j12:1.7.25'
   compileOnly 'log4j:log4j:1.2.17'
-  testCompile 'org.slf4j:slf4j-api:1.7.25'
-  testCompile 'org.slf4j:slf4j-log4j12:1.7.25'
-  testCompile 'log4j:log4j:1.2.17'
+  testImplementation 'org.slf4j:slf4j-api:1.7.25'
+  testImplementation 'org.slf4j:slf4j-log4j12:1.7.25'
+  testImplementation 'log4j:log4j:1.2.17'
 
   compileOnly 'org.apache.logging.log4j:log4j-slf4j-impl:2.11.1'
   compileOnly 'org.apache.logging.log4j:log4j-api:2.11.1'
@@ -77,35 +76,35 @@ dependencies {
   compileOnly 'ch.qos.logback:logback-classic:1.2.3'
   compileOnly 'ch.qos.logback:logback-core:1.2.3'
 
-  testCompile 'junit:junit:4.12'
-  testCompile 'org.eclipse.jetty:jetty-plus:9.4.12.v20180830' // datasource testing through JNDI
-  testCompile 'commons-dbcp:commons-dbcp:1.4' // datasource testing
-  testCompile 'org.codehaus.btm:btm:2.1.4' // xa datasource testing
-  testCompile 'org.apache.geronimo.specs:geronimo-jta_1.1_spec:1.1.1'
-  testCompile 'org.liquibase:liquibase-core:3.0.8'
-  testCompile 'com.mattbertolini:liquibase-slf4j:1.2.1'
-  testCompile 'org.springframework:spring-jdbc:5.1.0.RELEASE'
-  testCompile 'org.springframework:spring-context:5.1.0.RELEASE'
-  testCompile 'com.j256.simplejmx:simplejmx:1.15'
-  testCompile 'commons-io:commons-io:2.6'
-  testCompile 'org.apache.commons:commons-exec:1.3'
-  testCompile 'org.apache.commons:commons-lang3:3.8.1'
-  testCompile 'commons-beanutils:commons-beanutils:1.9.3'
-  testCompile 'org.mockito:mockito-core:2.22.0'
-  testCompile 'org.apache.tomcat:tomcat-jdbc:9.0.12' // tomcat pooled datasource testing
+  testImplementation 'junit:junit:4.12'
+  testImplementation 'org.eclipse.jetty:jetty-plus:9.4.12.v20180830' // datasource testing through JNDI
+  testImplementation 'commons-dbcp:commons-dbcp:1.4' // datasource testing
+  testImplementation 'org.codehaus.btm:btm:2.1.4' // xa datasource testing
+  testImplementation 'org.apache.geronimo.specs:geronimo-jta_1.1_spec:1.1.1'
+  testImplementation 'org.liquibase:liquibase-core:3.0.8'
+  testImplementation 'com.mattbertolini:liquibase-slf4j:1.2.1'
+  testImplementation 'org.springframework:spring-jdbc:5.1.0.RELEASE'
+  testImplementation 'org.springframework:spring-context:5.1.0.RELEASE'
+  testImplementation 'com.j256.simplejmx:simplejmx:1.15'
+  testImplementation 'commons-io:commons-io:2.6'
+  testImplementation 'org.apache.commons:commons-exec:1.3'
+  testImplementation 'org.apache.commons:commons-lang3:3.8.1'
+  testImplementation 'commons-beanutils:commons-beanutils:1.9.3'
+  testImplementation 'org.mockito:mockito-core:2.22.0'
+  testImplementation 'org.apache.tomcat:tomcat-jdbc:9.0.12' // tomcat pooled datasource testing
 
   // all the JDBC drivers tested
-  testRuntime 'mysql:mysql-connector-java:5.1.47'
-  testRuntime 'org.postgresql:postgresql:42.2.5.jre7'
-  testCompile 'org.hsqldb:hsqldb:2.4.1'
-  testCompile 'com.h2database:h2:1.4.197'
-  testRuntime 'org.xerial:sqlite-jdbc:3.25.2' // type 3 driver
-  testRuntime 'org.apache.derby:derby:10.14.2.0'
-  testRuntime 'org.firebirdsql.jdbc:jaybird-jdk17:3.0.5' // type 4.1 driver
-  testRuntime 'com.microsoft.sqlserver:mssql-jdbc:7.1.1.jre8-preview'
+  testRuntimeOnly 'mysql:mysql-connector-java:5.1.47'
+  testRuntimeOnly 'org.postgresql:postgresql:42.2.5.jre7'
+  testImplementation 'org.hsqldb:hsqldb:2.4.1'
+  testImplementation 'com.h2database:h2:1.4.197'
+  testRuntimeOnly 'org.xerial:sqlite-jdbc:3.25.2' // type 3 driver
+  testRuntimeOnly 'org.apache.derby:derby:10.14.2.0'
+  testRuntimeOnly 'org.firebirdsql.jdbc:jaybird-jdk17:3.0.5' // type 4.1 driver
+  testRuntimeOnly 'com.microsoft.sqlserver:mssql-jdbc:7.1.1.jre8-preview'
 
   if (envDB.contains('Oracle')) {
-    testRuntime name: 'ojdbc6' // oracle copied from docker oracle container
+    testRuntimeOnly name: 'ojdbc6' // oracle copied from docker oracle container
   }
 }
 

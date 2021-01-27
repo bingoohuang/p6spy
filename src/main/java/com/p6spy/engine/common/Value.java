@@ -1,14 +1,14 @@
 /**
  * P6Spy
- *
+ * <p>
  * Copyright (C) 2002 P6Spy
- *
+ * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -32,7 +32,6 @@ import java.util.Date;
  * {@code excludebinary}.
  *
  * @author Peter Butkovic
- *
  */
 public class Value {
 
@@ -79,25 +78,26 @@ public class Value {
    */
   public String convertToString(Object value) {
     String result;
-    
-    if (value == null) {
-      result = "NULL";
-    } else {
 
-      if (value instanceof byte[]) {
-        // P6LogFactory may not be registered
-        P6LogLoadableOptions logOptions = P6LogOptions.getActiveInstance();
-        if (logOptions != null && logOptions.getExcludebinary()) {
-          result = "[binary]";
-        } else {
-          BinaryFormat binaryFormat = P6SpyOptions.getActiveInstance().getDatabaseDialectBinaryFormatInstance();
-          
-          // return early because BinaryFormat#toString wraps the value in quotes if needed
-          return binaryFormat.toString((byte[]) value);
-        }
-        
-        // we should not do ((Blob) value).getBinaryStream(). ...
-        // as inputstream might not be re-rea
+    if (value == null) {
+      return "NULL";
+    }
+
+
+    if (value instanceof byte[]) {
+      // P6LogFactory may not be registered
+      P6LogLoadableOptions logOptions = P6LogOptions.getActiveInstance();
+      if (logOptions != null && logOptions.getExcludebinary()) {
+        result = "[binary]";
+      } else {
+        BinaryFormat f = P6SpyOptions.getActiveInstance().getDatabaseDialectBinaryFormatInstance();
+
+        // return early because BinaryFormat#toString wraps the value in quotes if needed
+        return f.toString((byte[]) value);
+      }
+
+      // we should not do ((Blob) value).getBinaryStream(). ...
+      // as inputstream might not be re-rea
 //      } else  if (value instanceof Blob) {
 //        P6LogLoadableOptions logOptions = P6LogOptions.getActiveInstance();
 //        if (logOptions != null && logOptions.getExcludebinary()) {
@@ -105,29 +105,29 @@ public class Value {
 //        } else {
 //          result = value.toString();
 //        }
-      } else if (value instanceof Timestamp) {
-        result = new SimpleDateFormat(P6SpyOptions.getActiveInstance().getDatabaseDialectTimestampFormat()).format(value);
-      } else if (value instanceof Date) {
-        result = new SimpleDateFormat(P6SpyOptions.getActiveInstance().getDatabaseDialectDateFormat()).format(value);
-      } else if (value instanceof Boolean) {
-        if ("numeric".equals(P6SpyOptions.getActiveInstance().getDatabaseDialectBooleanFormat())) {
-          result = Boolean.FALSE.equals(value) ? "0" : "1";
-        } else {
-          result = value.toString();
-        }
+    } else if (value instanceof Timestamp) {
+      String f = P6SpyOptions.getActiveInstance().getDatabaseDialectTimestampFormat();
+      result = new SimpleDateFormat(f).format(value);
+    } else if (value instanceof Date) {
+      String f = P6SpyOptions.getActiveInstance().getDatabaseDialectDateFormat();
+      result = new SimpleDateFormat(f).format(value);
+    } else if (value instanceof Boolean) {
+      String f = P6SpyOptions.getActiveInstance().getDatabaseDialectBooleanFormat();
+      if ("numeric".equals(f)) {
+        result = Boolean.FALSE.equals(value) ? "0" : "1";
       } else {
         result = value.toString();
       }
-
-      result = quoteIfNeeded(result, value);
+    } else {
+      result = value.toString();
     }
 
-    return result;
+    return quoteIfNeeded(result, value);
   }
 
   /**
    * Qoutes the passed {@code stringValue} if it's needed.
-   * 
+   *
    * @param stringValue
    * @param obj
    * @return
@@ -140,30 +140,29 @@ public class Value {
     /*
      * The following types do not get quoted: numeric, boolean.
      * Binary data is quoted only if the supplied binaryFormat requires that.
-     * 
+     *
      * It is tempting to use ParameterMetaData.getParameterType() for this
      * purpose as it would be safer. However, this method will fail with some
      * JDBC drivers.
-     * 
+     *
      * Oracle: Not supported until ojdbc7 which was released with Oracle 12c.
      * https://forums.oracle.com/thread/2584886
-     * 
+     *
      * MySQL: The method call only works if service side prepared statements are
      * enabled. The URL parameter 'useServerPrepStmts=true' enables.
      */
     if (Number.class.isAssignableFrom(obj.getClass()) || Boolean.class.isAssignableFrom(obj.getClass())) {
       return stringValue;
-    } else {
-      return "'" + escape(stringValue) + "'";
     }
+
+    return "'" + escape(stringValue) + "'";
   }
 
   /**
    * Escapes special characters in SQL values. Currently is only {@code '}
    * escaped with {@code ''}.
-   * 
-   * @param stringValue
-   *          value to escape
+   *
+   * @param stringValue value to escape
    * @return escaped value.
    */
   private String escape(String stringValue) {

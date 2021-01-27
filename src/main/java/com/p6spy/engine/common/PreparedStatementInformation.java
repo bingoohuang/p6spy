@@ -29,8 +29,8 @@ import java.util.Map;
 public class PreparedStatementInformation extends StatementInformation implements Loggable {
   private final Map<Integer, Value> parameterValues = new HashMap<Integer, Value>();
 
-  public PreparedStatementInformation(final ConnectionInformation connectionInformation, String query) {
-    super(connectionInformation);
+  public PreparedStatementInformation(final ConnectionInformation c, String query) {
+    super(c);
     setStatementQuery(query);
   }
 
@@ -47,16 +47,16 @@ public class PreparedStatementInformation extends StatementInformation implement
 
     // iterate over the characters in the query replacing the parameter placeholders
     // with the actual values
-    int currentParameter = 0;
+    int curParameter = 0;
     for( int pos = 0; pos < statementQuery.length(); pos ++) {
-      char character = statementQuery.charAt(pos);
-      if( statementQuery.charAt(pos) == '?' && currentParameter <= parameterValues.size()) {
+      char ch = statementQuery.charAt(pos);
+      if( statementQuery.charAt(pos) == '?' && curParameter <= parameterValues.size()) {
         // replace with parameter value
-        Value value = parameterValues.get(currentParameter);
+        Value value = parameterValues.get(curParameter);
         sb.append(value != null ? value.toString() : new Value().toString());
-        currentParameter++;
+        curParameter++;
       } else {
-        sb.append(character);
+        sb.append(ch);
       }
     }
 

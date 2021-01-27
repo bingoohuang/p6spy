@@ -1,14 +1,14 @@
 /**
  * P6Spy
- *
+ * <p>
  * Copyright (C) 2002 P6Spy
- *
+ * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -17,11 +17,7 @@
  */
 package com.p6spy.engine.event;
 
-import com.p6spy.engine.common.CallableStatementInformation;
-import com.p6spy.engine.common.ConnectionInformation;
-import com.p6spy.engine.common.PreparedStatementInformation;
-import com.p6spy.engine.common.ResultSetInformation;
-import com.p6spy.engine.common.StatementInformation;
+import com.p6spy.engine.common.*;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -44,7 +40,7 @@ public class CompoundJdbcEventListener extends JdbcEventListener {
    * Adds a listener to this {@link CompoundJdbcEventListener}
    *
    * @param listener The listener to add
-   * @deprecated     This method name has a typo, please use {@link CompoundJdbcEventListener#addListener}
+   * @deprecated This method name has a typo, please use {@link CompoundJdbcEventListener#addListener}
    */
   public void addListender(JdbcEventListener listener) {
     addListener(listener);
@@ -69,262 +65,262 @@ public class CompoundJdbcEventListener extends JdbcEventListener {
   }
 
   @Override
-  public void onBeforeGetConnection(ConnectionInformation connectionInformation) {
+  public void onBeforeGetConnection(ConnectionInformation c) {
     for (JdbcEventListener eventListener : eventListeners) {
-      eventListener.onBeforeGetConnection(connectionInformation);
+      eventListener.onBeforeGetConnection(c);
     }
   }
 
   @Override
-  public void onAfterGetConnection(ConnectionInformation connectionInformation, SQLException e) {
+  public void onAfterGetConnection(ConnectionInformation c, SQLException e) {
     for (JdbcEventListener eventListener : eventListeners) {
-      eventListener.onAfterGetConnection(connectionInformation, e);
+      eventListener.onAfterGetConnection(c, e);
     }
   }
 
   @Override
   @Deprecated
-  public void onConnectionWrapped(ConnectionInformation connectionInformation) {
+  public void onConnectionWrapped(ConnectionInformation c) {
     for (JdbcEventListener eventListener : eventListeners) {
-      eventListener.onConnectionWrapped(connectionInformation);
+      eventListener.onConnectionWrapped(c);
     }
   }
 
   @Override
-  public void onBeforeAddBatch(PreparedStatementInformation statementInformation) {
+  public void onBeforeAddBatch(PreparedStatementInformation p) {
     for (JdbcEventListener eventListener : eventListeners) {
-      eventListener.onBeforeAddBatch(statementInformation);
+      eventListener.onBeforeAddBatch(p);
     }
   }
 
   @Override
-  public void onAfterAddBatch(PreparedStatementInformation statementInformation, long timeElapsedNanos, SQLException e) {
+  public void onAfterAddBatch(PreparedStatementInformation p, long timeElapsedNanos, SQLException e) {
     for (JdbcEventListener eventListener : eventListeners) {
-      eventListener.onAfterAddBatch(statementInformation, timeElapsedNanos, e);
+      eventListener.onAfterAddBatch(p, timeElapsedNanos, e);
     }
   }
 
   @Override
-  public void onBeforeAddBatch(StatementInformation statementInformation, String sql) {
+  public void onBeforeAddBatch(StatementInformation s, String sql) {
     for (JdbcEventListener eventListener : eventListeners) {
-      eventListener.onBeforeAddBatch(statementInformation, sql);
+      eventListener.onBeforeAddBatch(s, sql);
     }
   }
 
   @Override
-  public void onAfterAddBatch(StatementInformation statementInformation, long timeElapsedNanos, String sql, SQLException e) {
+  public void onAfterAddBatch(StatementInformation s, long timeElapsedNanos, String sql, SQLException e) {
     for (JdbcEventListener eventListener : eventListeners) {
-      eventListener.onAfterAddBatch(statementInformation, timeElapsedNanos, sql, e);
+      eventListener.onAfterAddBatch(s, timeElapsedNanos, sql, e);
     }
   }
 
   @Override
-  public void onBeforeExecute(PreparedStatementInformation statementInformation) {
+  public void onBeforeExecute(PreparedStatementInformation p) {
     for (JdbcEventListener eventListener : eventListeners) {
-      eventListener.onBeforeExecute(statementInformation);
+      eventListener.onBeforeExecute(p);
     }
   }
 
   @Override
-  public void onAfterExecute(PreparedStatementInformation statementInformation, long timeElapsedNanos, SQLException e) {
+  public void onAfterExecute(PreparedStatementInformation p, long timeElapsedNanos, SQLException e) {
     for (JdbcEventListener eventListener : eventListeners) {
-      eventListener.onAfterExecute(statementInformation, timeElapsedNanos, e);
+      eventListener.onAfterExecute(p, timeElapsedNanos, e);
     }
   }
 
   @Override
-  public void onBeforeExecute(StatementInformation statementInformation, String sql) {
+  public void onBeforeExecute(StatementInformation s, String sql) {
     for (JdbcEventListener eventListener : eventListeners) {
-      eventListener.onBeforeExecute(statementInformation, sql);
+      eventListener.onBeforeExecute(s, sql);
     }
   }
 
   @Override
-  public void onAfterExecute(StatementInformation statementInformation, long timeElapsedNanos, String sql, SQLException e) {
+  public void onAfterExecute(StatementInformation s, long timeElapsedNanos, String sql, SQLException e) {
     for (JdbcEventListener eventListener : eventListeners) {
-      eventListener.onAfterExecute(statementInformation, timeElapsedNanos, sql, e);
+      eventListener.onAfterExecute(s, timeElapsedNanos, sql, e);
     }
   }
 
   @Override
-  public void onBeforeExecuteBatch(StatementInformation statementInformation) {
+  public void onBeforeExecuteBatch(StatementInformation s) {
     for (JdbcEventListener eventListener : eventListeners) {
-      eventListener.onBeforeExecuteBatch(statementInformation);
+      eventListener.onBeforeExecuteBatch(s);
     }
   }
 
   @Override
-  public void onAfterExecuteBatch(StatementInformation statementInformation, long timeElapsedNanos, int[] updateCounts, SQLException e) {
+  public void onAfterExecuteBatch(StatementInformation s, long timeElapsedNanos, int[] updateCounts, SQLException e) {
     for (JdbcEventListener eventListener : eventListeners) {
-      eventListener.onAfterExecuteBatch(statementInformation, timeElapsedNanos, updateCounts, e);
+      eventListener.onAfterExecuteBatch(s, timeElapsedNanos, updateCounts, e);
     }
   }
 
   @Override
-  public void onBeforeExecuteUpdate(PreparedStatementInformation statementInformation) {
+  public void onBeforeExecuteUpdate(PreparedStatementInformation p) {
     for (JdbcEventListener eventListener : eventListeners) {
-      eventListener.onBeforeExecuteUpdate(statementInformation);
+      eventListener.onBeforeExecuteUpdate(p);
     }
   }
 
   @Override
-  public void onAfterExecuteUpdate(PreparedStatementInformation statementInformation, long timeElapsedNanos, int rowCount, SQLException e) {
+  public void onAfterExecuteUpdate(PreparedStatementInformation s, long timeElapsedNanos, int rowCount, SQLException e) {
     for (JdbcEventListener eventListener : eventListeners) {
-      eventListener.onAfterExecuteUpdate(statementInformation, timeElapsedNanos, rowCount, e);
+      eventListener.onAfterExecuteUpdate(s, timeElapsedNanos, rowCount, e);
     }
   }
 
   @Override
-  public void onBeforeExecuteUpdate(StatementInformation statementInformation, String sql) {
+  public void onBeforeExecuteUpdate(StatementInformation s, String sql) {
     for (JdbcEventListener eventListener : eventListeners) {
-      eventListener.onBeforeExecuteUpdate(statementInformation, sql);
+      eventListener.onBeforeExecuteUpdate(s, sql);
     }
   }
 
   @Override
-  public void onAfterExecuteUpdate(StatementInformation statementInformation, long timeElapsedNanos, String sql, int rowCount, SQLException e) {
+  public void onAfterExecuteUpdate(StatementInformation s, long timeElapsedNanos, String sql, int rowCount, SQLException e) {
     for (JdbcEventListener eventListener : eventListeners) {
-      eventListener.onAfterExecuteUpdate(statementInformation, timeElapsedNanos, sql, rowCount, e);
+      eventListener.onAfterExecuteUpdate(s, timeElapsedNanos, sql, rowCount, e);
     }
   }
 
   @Override
-  public void onBeforeExecuteQuery(PreparedStatementInformation statementInformation) {
+  public void onBeforeExecuteQuery(PreparedStatementInformation p) {
     for (JdbcEventListener eventListener : eventListeners) {
-      eventListener.onBeforeExecuteQuery(statementInformation);
+      eventListener.onBeforeExecuteQuery(p);
     }
   }
 
   @Override
-  public void onAfterExecuteQuery(PreparedStatementInformation statementInformation, long timeElapsedNanos, SQLException e) {
+  public void onAfterExecuteQuery(PreparedStatementInformation p, long timeElapsedNanos, SQLException e) {
     for (JdbcEventListener eventListener : eventListeners) {
-      eventListener.onAfterExecuteQuery(statementInformation, timeElapsedNanos, e);
+      eventListener.onAfterExecuteQuery(p, timeElapsedNanos, e);
     }
   }
 
   @Override
-  public void onBeforeExecuteQuery(StatementInformation statementInformation, String sql) {
+  public void onBeforeExecuteQuery(StatementInformation s, String sql) {
     for (JdbcEventListener eventListener : eventListeners) {
-      eventListener.onBeforeExecuteQuery(statementInformation, sql);
+      eventListener.onBeforeExecuteQuery(s, sql);
     }
   }
 
   @Override
-  public void onAfterExecuteQuery(StatementInformation statementInformation, long timeElapsedNanos, String sql, SQLException e) {
+  public void onAfterExecuteQuery(StatementInformation s, long timeElapsedNanos, String sql, SQLException e) {
     for (JdbcEventListener eventListener : eventListeners) {
-      eventListener.onAfterExecuteQuery(statementInformation, timeElapsedNanos, sql, e);
+      eventListener.onAfterExecuteQuery(s, timeElapsedNanos, sql, e);
     }
   }
 
   @Override
-  public void onAfterPreparedStatementSet(PreparedStatementInformation statementInformation, int parameterIndex, Object value, SQLException e) {
+  public void onAfterPreparedStatementSet(PreparedStatementInformation p, int parameterIndex, Object value, SQLException e) {
     for (JdbcEventListener eventListener : eventListeners) {
-      eventListener.onAfterPreparedStatementSet(statementInformation, parameterIndex, value, e);
+      eventListener.onAfterPreparedStatementSet(p, parameterIndex, value, e);
     }
   }
 
   @Override
-  public void onAfterCallableStatementSet(CallableStatementInformation statementInformation, String parameterName, Object value, SQLException e) {
+  public void onAfterCallableStatementSet(CallableStatementInformation c, String parameterName, Object value, SQLException e) {
     for (JdbcEventListener eventListener : eventListeners) {
-      eventListener.onAfterCallableStatementSet(statementInformation, parameterName, value, e);
+      eventListener.onAfterCallableStatementSet(c, parameterName, value, e);
     }
   }
 
   @Override
-  public void onAfterGetResultSet(StatementInformation statementInformation, long timeElapsedNanos, SQLException e) {
+  public void onAfterGetResultSet(StatementInformation s, long timeElapsedNanos, SQLException e) {
     for (JdbcEventListener eventListener : eventListeners) {
-      eventListener.onAfterGetResultSet(statementInformation, timeElapsedNanos, e);
+      eventListener.onAfterGetResultSet(s, timeElapsedNanos, e);
     }
   }
 
   @Override
-  public void onBeforeResultSetNext(ResultSetInformation resultSetInformation) {
+  public void onBeforeResultSetNext(ResultSetInformation r) {
     for (JdbcEventListener eventListener : eventListeners) {
-      eventListener.onBeforeResultSetNext(resultSetInformation);
+      eventListener.onBeforeResultSetNext(r);
     }
   }
 
   @Override
-  public void onAfterResultSetNext(ResultSetInformation resultSetInformation, long timeElapsedNanos, boolean hasNext, SQLException e) {
+  public void onAfterResultSetNext(ResultSetInformation r, long timeElapsedNanos, boolean hasNext, SQLException e) {
     for (JdbcEventListener eventListener : eventListeners) {
-      eventListener.onAfterResultSetNext(resultSetInformation, timeElapsedNanos, hasNext, e);
+      eventListener.onAfterResultSetNext(r, timeElapsedNanos, hasNext, e);
     }
   }
 
   @Override
-  public void onAfterResultSetClose(ResultSetInformation resultSetInformation, SQLException e) {
+  public void onAfterResultSetClose(ResultSetInformation r, SQLException e) {
     for (JdbcEventListener eventListener : eventListeners) {
-      eventListener.onAfterResultSetClose(resultSetInformation, e);
+      eventListener.onAfterResultSetClose(r, e);
     }
   }
 
   @Override
-  public void onAfterResultSetGet(ResultSetInformation resultSetInformation, String columnLabel, Object value, SQLException e) {
+  public void onAfterResultSetGet(ResultSetInformation r, String columnLabel, Object value, SQLException e) {
     for (JdbcEventListener eventListener : eventListeners) {
-      eventListener.onAfterResultSetGet(resultSetInformation, columnLabel, value, e);
+      eventListener.onAfterResultSetGet(r, columnLabel, value, e);
     }
   }
 
   @Override
-  public void onAfterResultSetGet(ResultSetInformation resultSetInformation, int columnIndex, Object value, SQLException e) {
+  public void onAfterResultSetGet(ResultSetInformation r, int columnIndex, Object value, SQLException e) {
     for (JdbcEventListener eventListener : eventListeners) {
-      eventListener.onAfterResultSetGet(resultSetInformation, columnIndex, value, e);
+      eventListener.onAfterResultSetGet(r, columnIndex, value, e);
     }
   }
 
   @Override
-  public void onBeforeCommit(ConnectionInformation connectionInformation) {
+  public void onBeforeCommit(ConnectionInformation c) {
     for (JdbcEventListener eventListener : eventListeners) {
-      eventListener.onBeforeCommit(connectionInformation);
+      eventListener.onBeforeCommit(c);
     }
   }
 
   @Override
-  public void onAfterCommit(ConnectionInformation connectionInformation, long timeElapsedNanos, SQLException e) {
+  public void onAfterCommit(ConnectionInformation c, long timeElapsedNanos, SQLException e) {
     for (JdbcEventListener eventListener : eventListeners) {
-      eventListener.onAfterCommit(connectionInformation, timeElapsedNanos, e);
+      eventListener.onAfterCommit(c, timeElapsedNanos, e);
     }
   }
 
   @Override
-  public void onAfterConnectionClose(ConnectionInformation connectionInformation, SQLException e) {
+  public void onAfterConnectionClose(ConnectionInformation c, SQLException e) {
     for (JdbcEventListener eventListener : eventListeners) {
-      eventListener.onAfterConnectionClose(connectionInformation, e);
+      eventListener.onAfterConnectionClose(c, e);
     }
   }
 
   @Override
-  public void onBeforeRollback(ConnectionInformation connectionInformation) {
+  public void onBeforeRollback(ConnectionInformation c) {
     for (JdbcEventListener eventListener : eventListeners) {
-      eventListener.onBeforeRollback(connectionInformation);
+      eventListener.onBeforeRollback(c);
     }
   }
 
   @Override
-  public void onAfterRollback(ConnectionInformation connectionInformation, long timeElapsedNanos, SQLException e) {
+  public void onAfterRollback(ConnectionInformation c, long timeElapsedNanos, SQLException e) {
     for (JdbcEventListener eventListener : eventListeners) {
-      eventListener.onAfterRollback(connectionInformation, timeElapsedNanos, e);
-    }
-  }
-  
-  @Override
-  public void onAfterStatementClose(StatementInformation statementInformation, SQLException e) {
-    for (JdbcEventListener eventListener : eventListeners) {
-      eventListener.onAfterStatementClose(statementInformation, e);
+      eventListener.onAfterRollback(c, timeElapsedNanos, e);
     }
   }
 
   @Override
-  public void onBeforeSetAutoCommit(ConnectionInformation connectionInformation, boolean newAutoCommit, boolean currentAutoCommit) {
+  public void onAfterStatementClose(StatementInformation s, SQLException e) {
     for (JdbcEventListener eventListener : eventListeners) {
-      eventListener.onBeforeSetAutoCommit(connectionInformation, newAutoCommit,currentAutoCommit);
+      eventListener.onAfterStatementClose(s, e);
     }
   }
 
   @Override
-  public void onAfterSetAutoCommit(ConnectionInformation connectionInformation, boolean newAutoCommit, boolean oldAutoCommit, SQLException e) {
+  public void onBeforeSetAutoCommit(ConnectionInformation c, boolean newAutoCommit, boolean currentAutoCommit) {
     for (JdbcEventListener eventListener : eventListeners) {
-      eventListener.onAfterSetAutoCommit(connectionInformation, newAutoCommit,oldAutoCommit,e);
+      eventListener.onBeforeSetAutoCommit(c, newAutoCommit, currentAutoCommit);
+    }
+  }
+
+  @Override
+  public void onAfterSetAutoCommit(ConnectionInformation c, boolean newAutoCommit, boolean oldAutoCommit, SQLException e) {
+    for (JdbcEventListener eventListener : eventListeners) {
+      eventListener.onAfterSetAutoCommit(c, newAutoCommit, oldAutoCommit, e);
     }
   }
 

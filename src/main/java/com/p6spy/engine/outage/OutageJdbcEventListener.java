@@ -34,58 +34,58 @@ public class OutageJdbcEventListener extends SimpleJdbcEventListener {
   }
 
   @Override
-  public void onBeforeCommit(ConnectionInformation connectionInformation) {
+  public void onBeforeCommit(ConnectionInformation c) {
     if (P6OutageOptions.getActiveInstance().getOutageDetection()) {
-      P6OutageDetector.INSTANCE.registerInvocation(this, System.nanoTime(), "commit", "", "", connectionInformation.getUrl());
+      P6OutageDetector.INSTANCE.registerInvocation(this, System.nanoTime(), "commit", "", "", c.getUrl());
     }
   }
 
   @Override
-  public void onAfterCommit(ConnectionInformation connectionInformation, long timeElapsedNanos, SQLException e) {
-    if (P6OutageOptions.getActiveInstance().getOutageDetection()) {
-      P6OutageDetector.INSTANCE.unregisterInvocation(this);
-    }
-  }
-
-  @Override
-  public void onBeforeRollback(ConnectionInformation connectionInformation) {
-    if (P6OutageOptions.getActiveInstance().getOutageDetection()) {
-      P6OutageDetector.INSTANCE.registerInvocation(this, System.nanoTime(), "rollback", "", "", connectionInformation.getUrl());
-    }
-  }
-
-  @Override
-  public void onAfterRollback(ConnectionInformation connectionInformation, long timeElapsedNanos, SQLException e) {
+  public void onAfterCommit(ConnectionInformation c, long timeElapsedNanos, SQLException e) {
     if (P6OutageOptions.getActiveInstance().getOutageDetection()) {
       P6OutageDetector.INSTANCE.unregisterInvocation(this);
     }
   }
 
   @Override
-  public void onBeforeAnyAddBatch(StatementInformation statementInformation) {
+  public void onBeforeRollback(ConnectionInformation c) {
+    if (P6OutageOptions.getActiveInstance().getOutageDetection()) {
+      P6OutageDetector.INSTANCE.registerInvocation(this, System.nanoTime(), "rollback", "", "", c.getUrl());
+    }
+  }
+
+  @Override
+  public void onAfterRollback(ConnectionInformation c, long timeElapsedNanos, SQLException e) {
+    if (P6OutageOptions.getActiveInstance().getOutageDetection()) {
+      P6OutageDetector.INSTANCE.unregisterInvocation(this);
+    }
+  }
+
+  @Override
+  public void onBeforeAnyAddBatch(StatementInformation s) {
     if (P6OutageOptions.getActiveInstance().getOutageDetection()) {
       P6OutageDetector.INSTANCE.registerInvocation(this, System.nanoTime(), "batch",
-        statementInformation.getSqlWithValues(), statementInformation.getStatementQuery(), statementInformation.getConnectionInformation().getUrl());
+        s.getSqlWithValues(), s.getStatementQuery(), s.getConnectionInformation().getUrl());
     }
   }
 
   @Override
-  public void onAfterAnyAddBatch(StatementInformation statementInformation, long timeElapsedNanos, SQLException e) {
+  public void onAfterAnyAddBatch(StatementInformation s, long timeElapsedNanos, SQLException e) {
     if (P6OutageOptions.getActiveInstance().getOutageDetection()) {
       P6OutageDetector.INSTANCE.unregisterInvocation(this);
     }
   }
 
   @Override
-  public void onBeforeAnyExecute(StatementInformation statementInformation) {
+  public void onBeforeAnyExecute(StatementInformation s) {
     if (P6OutageOptions.getActiveInstance().getOutageDetection()) {
       P6OutageDetector.INSTANCE.registerInvocation(this, System.nanoTime(), "statement",
-        statementInformation.getSqlWithValues(), statementInformation.getStatementQuery(), statementInformation.getConnectionInformation().getUrl());
+        s.getSqlWithValues(), s.getStatementQuery(), s.getConnectionInformation().getUrl());
     }
   }
 
   @Override
-  public void onAfterAnyExecute(StatementInformation statementInformation, long timeElapsedNanos, SQLException e) {
+  public void onAfterAnyExecute(StatementInformation s, long timeElapsedNanos, SQLException e) {
     if (P6OutageOptions.getActiveInstance().getOutageDetection()) {
       P6OutageDetector.INSTANCE.unregisterInvocation(this);
     }

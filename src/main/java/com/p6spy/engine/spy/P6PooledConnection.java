@@ -1,14 +1,14 @@
 /**
  * P6Spy
- *
+ * <p>
  * Copyright (C) 2002 P6Spy
- *
+ * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -33,9 +33,9 @@ public class P6PooledConnection implements PooledConnection {
   protected final PooledConnection passthru;
   protected final JdbcEventListenerFactory jdbcEventListenerFactory;
 
-  public P6PooledConnection(PooledConnection connection, JdbcEventListenerFactory jdbcEventListenerFactory) {
-    this.passthru = connection;
-    this.jdbcEventListenerFactory = jdbcEventListenerFactory;
+  public P6PooledConnection(PooledConnection c, JdbcEventListenerFactory l) {
+    this.passthru = c;
+    this.jdbcEventListenerFactory = l;
   }
 
   @Override
@@ -43,21 +43,23 @@ public class P6PooledConnection implements PooledConnection {
     final long start = System.nanoTime();
 
     final Connection conn;
-    final JdbcEventListener jdbcEventListener = this.jdbcEventListenerFactory.createJdbcEventListener();
-    final ConnectionInformation connectionInformation = ConnectionInformation.fromPooledConnection(passthru);
-    jdbcEventListener.onBeforeGetConnection(connectionInformation);
+    final JdbcEventListener l = this.jdbcEventListenerFactory.createJdbcEventListener();
+    final ConnectionInformation c = ConnectionInformation.fromPooledConnection(passthru);
+    l.onBeforeGetConnection(c);
+    SQLException se = null;
+
     try {
       conn = passthru.getConnection();
-      connectionInformation.setConnection(conn);
-      connectionInformation.setTimeToGetConnectionNs(System.nanoTime() - start);
-      jdbcEventListener.onAfterGetConnection(connectionInformation, null);
+      c.setConnection(conn);
     } catch (SQLException e) {
-      connectionInformation.setTimeToGetConnectionNs(System.nanoTime() - start);
-      jdbcEventListener.onAfterGetConnection(connectionInformation, e);
+      se = e;
       throw e;
+    } finally {
+      c.setTimeToGetConnectionNs(System.nanoTime() - start);
+      l.onAfterGetConnection(c, se);
     }
 
-    return ConnectionWrapper.wrap(conn, jdbcEventListener, connectionInformation);
+    return ConnectionWrapper.wrap(conn, l, c);
   }
 
   @Override

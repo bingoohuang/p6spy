@@ -246,9 +246,9 @@ public class P6DataSource implements DataSource, ConnectionPoolDataSource, XADat
 
   @Override
   public Reference getReference() {
-    final Reference reference = new Reference(getClass().getName(), P6DataSourceFactory.class.getName(), null);
-    reference.add(new StringRefAddr("dataSourceName", getRealDataSource()));
-    return reference;
+    final Reference r = new Reference(getClass().getName(), P6DataSourceFactory.class.getName(), null);
+    r.add(new StringRefAddr("dataSourceName", getRealDataSource()));
+    return r;
   }
 
   @Override

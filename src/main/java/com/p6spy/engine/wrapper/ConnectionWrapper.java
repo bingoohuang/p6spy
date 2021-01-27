@@ -57,13 +57,13 @@ public class ConnectionWrapper extends AbstractWrapper implements Connection {
   private final JdbcEventListener jdbcEventListener;
   private final ConnectionInformation connectionInformation;
 
-  public static ConnectionWrapper wrap(Connection delegate, JdbcEventListener eventListener, ConnectionInformation connectionInformation) {
+  public static ConnectionWrapper wrap(Connection delegate, JdbcEventListener l, ConnectionInformation c) {
     if (delegate == null) {
       return null;
     }
-    final ConnectionWrapper connectionWrapper = new ConnectionWrapper(delegate, eventListener, connectionInformation);
-    eventListener.onConnectionWrapped(connectionInformation);
-    return connectionWrapper;
+    final ConnectionWrapper w = new ConnectionWrapper(delegate, l, c);
+    l.onConnectionWrapped(c);
+    return w;
   }
 
   /**
@@ -72,14 +72,14 @@ public class ConnectionWrapper extends AbstractWrapper implements Connection {
    * Setting to protected instead of private, so that CGLIB can create a subclass/proxy
    * See also: {@code net.sf.cglib.proxy.Enhancer#filterConstructors} (protectedOk: true)
    */
-  protected ConnectionWrapper(Connection delegate, JdbcEventListener jdbcEventListener, ConnectionInformation connectionInformation) {
+  protected ConnectionWrapper(Connection delegate, JdbcEventListener l, ConnectionInformation c) {
     super(delegate);
     if (delegate == null) {
       throw new NullPointerException("Delegate must not be null");
     }
     this.delegate = delegate;
-    this.connectionInformation = connectionInformation;
-    this.jdbcEventListener = jdbcEventListener;
+    this.connectionInformation = c;
+    this.jdbcEventListener = l;
   }
   
   public JdbcEventListener getJdbcEventListener() {

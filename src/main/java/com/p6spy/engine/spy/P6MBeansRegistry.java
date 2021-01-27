@@ -36,7 +36,7 @@ public class P6MBeansRegistry {
 
   public static final String PACKAGE_NAME = "com.p6spy";
   
-  public void registerMBeans(Collection<P6LoadableOptions> allOptions) throws MBeanRegistrationException, InstanceNotFoundException, MalformedObjectNameException, NotCompliantMBeanException {
+  public void registerMBeans(Collection<P6LoadableOptions> allOptions) throws MBeanRegistrationException, MalformedObjectNameException, NotCompliantMBeanException {
     boolean jmx = true; 
     String jmxPrefix = "";
     

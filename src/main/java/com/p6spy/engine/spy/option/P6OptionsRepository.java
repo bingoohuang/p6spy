@@ -1,14 +1,14 @@
 /**
  * P6Spy
- *
+ * <p>
  * Copyright (C) 2002 P6Spy
- *
+ * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -17,20 +17,14 @@
  */
 package com.p6spy.engine.spy.option;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.regex.Pattern;
-
 import com.p6spy.engine.common.ClassHasher;
 import com.p6spy.engine.common.CustomHashedHashSet;
 import com.p6spy.engine.common.P6Util;
 import com.p6spy.engine.logging.Category;
 import com.p6spy.engine.spy.P6Factory;
+
+import java.util.*;
+import java.util.regex.Pattern;
 
 public class P6OptionsRepository {
 
@@ -38,7 +32,7 @@ public class P6OptionsRepository {
 
   private Set<DelayedOptionChange> delayedOptionChanges = new HashSet<DelayedOptionChange>();
 
-  private List<P6OptionChangedListener> listeners = new ArrayList<P6OptionChangedListener>();
+  private final List<P6OptionChangedListener> listeners = new ArrayList<P6OptionChangedListener>();
 
   /**
    * Inidicator whether initialization has been completed. To prevent usage of not yet initialized
@@ -58,7 +52,7 @@ public class P6OptionsRepository {
 
     return setOrUnSet(type, key, value, null);
   }
-  
+
   public <T> boolean setOrUnSet(Class<T> type, String key, Object value, Object defaultValue) {
     if (key == null || key.isEmpty()) {
       throw new IllegalArgumentException("key can be neither null nor empty!");
@@ -67,11 +61,11 @@ public class P6OptionsRepository {
     if (value == null) {
       value = defaultValue;
     }
-    
+
     if (value == null) {
       setInternal(key, value);
     } else {
-      setInternal(key, parse(type, value));  
+      setInternal(key, parse(type, value));
     }
 
     return true;
@@ -93,7 +87,7 @@ public class P6OptionsRepository {
     } else if (type.isAssignableFrom(Pattern.class)) {
       return Pattern.compile(value.toString());
     } else if (type.isAssignableFrom(Category.class)) {
-    	return new Category(value.toString());
+      return new Category(value.toString());
     } else {
 //		if (type.isEnum()) {
 //	    	// is sufficient for our use case where toString returns enum name
@@ -103,7 +97,7 @@ public class P6OptionsRepository {
 //	    	   }
 //	    	}
 //		}
-        	
+
       Object instance;
       try {
         instance = P6Util.forName(value.toString()).newInstance();
@@ -120,7 +114,7 @@ public class P6OptionsRepository {
       }
 
       try {
-        return (T) instance;
+        return instance;
       } catch (ClassCastException e) {
         System.err.println("Value " + value + ", is not of expected type. Error: " + e);
         return null;
@@ -151,26 +145,26 @@ public class P6OptionsRepository {
     Set<T> newValue = null;
 
     if (collection.isEmpty()) {
-    	map.remove(key);
-	} else {
-		if (type.equals(P6Factory.class)) {
-	    	// for P6Factories the hashcode is computed based on class
-	    	newValue = new CustomHashedHashSet<T>(new ClassHasher());
-	    } else {
-	    	newValue = new HashSet<T>();
-	    }
-	
-	    for (String item : collection) {
-	    	
-	    	if (item.startsWith("-")) {
-	        	throw new IllegalArgumentException("- prefix has been deprecated for list-like properties! Full overriding happens (see: http://p6spy.github.io/p6spy/2.0/configandusage.html)");
-	        }
-	    	
-	        newValue.add((T) parse(type, item));
-	    }
-	    map.put(key, newValue);	    
-	}
-    
+      map.remove(key);
+    } else {
+      if (type.equals(P6Factory.class)) {
+        // for P6Factories the hashcode is computed based on class
+        newValue = new CustomHashedHashSet<T>(new ClassHasher());
+      } else {
+        newValue = new HashSet<T>();
+      }
+
+      for (String item : collection) {
+
+        if (item.startsWith("-")) {
+          throw new IllegalArgumentException("- prefix has been deprecated for list-like properties! Full overriding happens (see: http://p6spy.github.io/p6spy/2.0/configandusage.html)");
+        }
+
+        newValue.add((T) parse(type, item));
+      }
+      map.put(key, newValue);
+    }
+
     // propagate the changes
     fireOptionChanged(key, oldValue, newValue);
 
@@ -196,7 +190,7 @@ public class P6OptionsRepository {
     for (DelayedOptionChange delayedOption : delayedOptionChanges) {
       for (P6OptionChangedListener listener : listeners) {
         listener.optionChanged(delayedOption.getKey(), delayedOption.getOldValue(),
-            delayedOption.getNewValue());
+          delayedOption.getNewValue());
       }
     }
 
@@ -235,48 +229,45 @@ public class P6OptionsRepository {
 
   class DelayedOptionChange {
 
-	private final String key;
+    private final String key;
     private final Object oldValue;
     private final Object newValue;
 
     public DelayedOptionChange(String key, Object oldValue, Object newValue) {
       super();
-      
+
       if (null == key || key.isEmpty()) {
-    	  throw new IllegalArgumentException("key can be neither null nor empty!");
+        throw new IllegalArgumentException("key can be neither null nor empty!");
       }
-      
+
       this.key = key;
       this.oldValue = oldValue;
       this.newValue = newValue;
     }
 
-    
+
     @Override
     public int hashCode() {
       // this is important part!
       return key.hashCode();
     }
-    
+
     @Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		DelayedOptionChange other = (DelayedOptionChange) obj;
-		if (!getOuterType().equals(other.getOuterType()))
-			return false;
-		if (key == null) {
-			if (other.key != null)
-				return false;
-		} else if (!key.equals(other.key))
-			return false;
-		return true;
-	}
-    
+    public boolean equals(Object obj) {
+      if (this == obj)
+        return true;
+      if (obj == null)
+        return false;
+      if (getClass() != obj.getClass())
+        return false;
+      DelayedOptionChange other = (DelayedOptionChange) obj;
+      if (!getOuterType().equals(other.getOuterType()))
+        return false;
+      if (key == null) {
+        return other.key == null;
+      } else return key.equals(other.key);
+    }
+
     public String getKey() {
       return key;
     }
@@ -289,8 +280,8 @@ public class P6OptionsRepository {
       return newValue;
     }
 
-	private P6OptionsRepository getOuterType() {
-		return P6OptionsRepository.this;
-	}
+    private P6OptionsRepository getOuterType() {
+      return P6OptionsRepository.this;
+    }
   }
 }

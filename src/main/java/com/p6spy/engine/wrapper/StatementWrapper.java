@@ -1,14 +1,14 @@
 /**
  * P6Spy
- *
+ * <p>
  * Copyright (C) 2002 P6Spy
- *
+ * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -43,19 +43,19 @@ public class StatementWrapper extends AbstractWrapper implements Statement {
   protected final JdbcEventListener eventListener;
   private final StatementInformation statementInformation;
 
-  public static Statement wrap(Statement delegate, StatementInformation statementInformation, JdbcEventListener eventListener) {
+  public static Statement wrap(Statement delegate, StatementInformation s, JdbcEventListener l) {
     if (delegate == null) {
       return null;
     }
-    return new StatementWrapper(delegate, statementInformation, eventListener);
+    return new StatementWrapper(delegate, s, l);
   }
 
-  protected StatementWrapper(Statement delegate, StatementInformation statementInformation, JdbcEventListener eventListener) {
+  protected StatementWrapper(Statement delegate, StatementInformation s, JdbcEventListener l) {
     super(delegate);
     this.delegate = delegate;
-    this.eventListener = eventListener;
-    this.statementInformation = statementInformation;
-    statementInformation.setStatement(delegate);
+    this.eventListener = l;
+    this.statementInformation = s;
+    s.setStatement(delegate);
   }
 
   @Override
@@ -248,7 +248,7 @@ public class StatementWrapper extends AbstractWrapper implements Statement {
     } else {
       statementInformation.setStatementQuery(sql + LINE_SEPARATOR + statementInformation.getStatementQuery());
     }
-    
+
     SQLException e = null;
     long start = System.nanoTime();
     try {

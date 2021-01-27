@@ -1,14 +1,14 @@
 /**
  * P6Spy
- *
+ * <p>
  * Copyright (C) 2002 P6Spy
- *
+ * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -70,7 +70,7 @@ public class SpyDotProperties implements P6OptionsSource {
       if (null != in) {
         try {
           in.close();
-        } catch( Exception e ) {
+        } catch (Exception e) {
         }
       }
     }
@@ -90,25 +90,26 @@ public class SpyDotProperties implements P6OptionsSource {
     long lastMod = -1;
     URLConnection con = null;
     URL url = locate();
-    if( url != null ) {
+    if (url != null) {
       try {
         con = url.openConnection();
         lastMod = con.getLastModified();
       } catch (IOException e) {
         // ignore
       } finally {
-        if( con != null ) {
+        if (con != null) {
           // getLastModified opens an input stream if it is a file
           // the inputStream must be closed manually!
           InputStream in = null;
           try {
-             in = con.getInputStream();
+            in = con.getInputStream();
           } catch (IOException e) {
           }
-          if( in != null ) {
+          if (in != null) {
             try {
               in.close();
-            } catch (IOException e) {}
+            } catch (IOException e) {
+            }
           }
 
         }

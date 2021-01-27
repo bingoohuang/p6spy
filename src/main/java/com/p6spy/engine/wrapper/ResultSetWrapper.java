@@ -1,14 +1,14 @@
 /**
  * P6Spy
- *
+ * <p>
  * Copyright (C) 2002 P6Spy
- *
+ * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -56,19 +56,19 @@ public class ResultSetWrapper extends AbstractWrapper implements ResultSet {
   private final ResultSetInformation resultSetInformation;
   private final JdbcEventListener eventListener;
 
-  public static ResultSet wrap(ResultSet delegate, ResultSetInformation resultSetInformation, JdbcEventListener eventListener) {
+  public static ResultSet wrap(ResultSet delegate, ResultSetInformation r, JdbcEventListener l) {
     if (delegate == null) {
       return null;
     }
-    return new ResultSetWrapper(delegate, resultSetInformation, eventListener);
+    return new ResultSetWrapper(delegate, r, l);
   }
 
-  public ResultSetWrapper(ResultSet delegate, ResultSetInformation resultSetInformation, JdbcEventListener eventListener) {
+  public ResultSetWrapper(ResultSet delegate, ResultSetInformation r, JdbcEventListener l) {
     super(delegate);
     this.delegate = delegate;
-    this.resultSetInformation = resultSetInformation;
-    this.eventListener = eventListener;
-    resultSetInformation.setResultSet(delegate);
+    this.resultSetInformation = r;
+    this.eventListener = l;
+    r.setResultSet(delegate);
   }
 
   public ResultSet getDelegate() {
@@ -116,7 +116,7 @@ public class ResultSetWrapper extends AbstractWrapper implements ResultSet {
 
   @Override
   public String getString(int columnIndex) throws SQLException {
-    SQLException e = null;
+    SQLException e;
     try {
       String value = delegate.getString(columnIndex);
       eventListener.onAfterResultSetGet(resultSetInformation, columnIndex, value, null);
@@ -130,7 +130,7 @@ public class ResultSetWrapper extends AbstractWrapper implements ResultSet {
 
   @Override
   public boolean getBoolean(int columnIndex) throws SQLException {
-    SQLException e = null;
+    SQLException e;
     try {
       boolean value = delegate.getBoolean(columnIndex);
       eventListener.onAfterResultSetGet(resultSetInformation, columnIndex, value, null);
@@ -144,7 +144,7 @@ public class ResultSetWrapper extends AbstractWrapper implements ResultSet {
 
   @Override
   public byte getByte(int columnIndex) throws SQLException {
-    SQLException e = null;
+    SQLException e;
     try {
       byte value = delegate.getByte(columnIndex);
       eventListener.onAfterResultSetGet(resultSetInformation, columnIndex, value, null);
@@ -158,7 +158,7 @@ public class ResultSetWrapper extends AbstractWrapper implements ResultSet {
 
   @Override
   public short getShort(int columnIndex) throws SQLException {
-    SQLException e = null;
+    SQLException e;
     try {
       short value = delegate.getShort(columnIndex);
       eventListener.onAfterResultSetGet(resultSetInformation, columnIndex, value, null);
@@ -172,7 +172,7 @@ public class ResultSetWrapper extends AbstractWrapper implements ResultSet {
 
   @Override
   public int getInt(int columnIndex) throws SQLException {
-    SQLException e = null;
+    SQLException e;
     try {
       int value = delegate.getInt(columnIndex);
       eventListener.onAfterResultSetGet(resultSetInformation, columnIndex, value, null);
@@ -186,7 +186,7 @@ public class ResultSetWrapper extends AbstractWrapper implements ResultSet {
 
   @Override
   public long getLong(int columnIndex) throws SQLException {
-    SQLException e = null;
+    SQLException e;
     try {
       long value = delegate.getLong(columnIndex);
       eventListener.onAfterResultSetGet(resultSetInformation, columnIndex, value, null);
@@ -200,7 +200,7 @@ public class ResultSetWrapper extends AbstractWrapper implements ResultSet {
 
   @Override
   public float getFloat(int columnIndex) throws SQLException {
-    SQLException e = null;
+    SQLException e;
     try {
       float value = delegate.getFloat(columnIndex);
       eventListener.onAfterResultSetGet(resultSetInformation, columnIndex, value, null);
@@ -214,7 +214,7 @@ public class ResultSetWrapper extends AbstractWrapper implements ResultSet {
 
   @Override
   public double getDouble(int columnIndex) throws SQLException {
-    SQLException e = null;
+    SQLException e;
     try {
       double value = delegate.getDouble(columnIndex);
       eventListener.onAfterResultSetGet(resultSetInformation, columnIndex, value, null);
@@ -228,7 +228,7 @@ public class ResultSetWrapper extends AbstractWrapper implements ResultSet {
 
   @Override
   public BigDecimal getBigDecimal(int columnIndex, int scale) throws SQLException {
-    SQLException e = null;
+    SQLException e;
     try {
       BigDecimal value = delegate.getBigDecimal(columnIndex, scale);
       eventListener.onAfterResultSetGet(resultSetInformation, columnIndex, value, null);
@@ -242,7 +242,7 @@ public class ResultSetWrapper extends AbstractWrapper implements ResultSet {
 
   @Override
   public byte[] getBytes(int columnIndex) throws SQLException {
-    SQLException e = null;
+    SQLException e;
     try {
       byte[] value = delegate.getBytes(columnIndex);
       eventListener.onAfterResultSetGet(resultSetInformation, columnIndex, value, null);
@@ -256,7 +256,7 @@ public class ResultSetWrapper extends AbstractWrapper implements ResultSet {
 
   @Override
   public Date getDate(int columnIndex) throws SQLException {
-    SQLException e = null;
+    SQLException e;
     try {
       Date value = delegate.getDate(columnIndex);
       eventListener.onAfterResultSetGet(resultSetInformation, columnIndex, value, null);
@@ -270,7 +270,7 @@ public class ResultSetWrapper extends AbstractWrapper implements ResultSet {
 
   @Override
   public Time getTime(int columnIndex) throws SQLException {
-    SQLException e = null;
+    SQLException e;
     try {
       Time value = delegate.getTime(columnIndex);
       eventListener.onAfterResultSetGet(resultSetInformation, columnIndex, value, null);
@@ -284,7 +284,7 @@ public class ResultSetWrapper extends AbstractWrapper implements ResultSet {
 
   @Override
   public Timestamp getTimestamp(int columnIndex) throws SQLException {
-    SQLException e = null;
+    SQLException e;
     try {
       Timestamp value = delegate.getTimestamp(columnIndex);
       eventListener.onAfterResultSetGet(resultSetInformation, columnIndex, value, null);
@@ -298,7 +298,7 @@ public class ResultSetWrapper extends AbstractWrapper implements ResultSet {
 
   @Override
   public InputStream getAsciiStream(int columnIndex) throws SQLException {
-    SQLException e = null;
+    SQLException e;
     try {
       InputStream value = delegate.getAsciiStream(columnIndex);
       eventListener.onAfterResultSetGet(resultSetInformation, columnIndex, value, null);
@@ -312,7 +312,7 @@ public class ResultSetWrapper extends AbstractWrapper implements ResultSet {
 
   @Override
   public InputStream getUnicodeStream(int columnIndex) throws SQLException {
-    SQLException e = null;
+    SQLException e;
     try {
       InputStream value = delegate.getUnicodeStream(columnIndex);
       eventListener.onAfterResultSetGet(resultSetInformation, columnIndex, value, null);
@@ -326,7 +326,7 @@ public class ResultSetWrapper extends AbstractWrapper implements ResultSet {
 
   @Override
   public InputStream getBinaryStream(int columnIndex) throws SQLException {
-    SQLException e = null;
+    SQLException e;
     try {
       InputStream value = delegate.getBinaryStream(columnIndex);
       eventListener.onAfterResultSetGet(resultSetInformation, columnIndex, value, null);
@@ -340,7 +340,7 @@ public class ResultSetWrapper extends AbstractWrapper implements ResultSet {
 
   @Override
   public String getString(String columnLabel) throws SQLException {
-    SQLException e = null;
+    SQLException e;
     try {
       String value = delegate.getString(columnLabel);
       eventListener.onAfterResultSetGet(resultSetInformation, columnLabel, value, null);
@@ -354,7 +354,7 @@ public class ResultSetWrapper extends AbstractWrapper implements ResultSet {
 
   @Override
   public boolean getBoolean(String columnLabel) throws SQLException {
-    SQLException e = null;
+    SQLException e;
     try {
       boolean value = delegate.getBoolean(columnLabel);
       eventListener.onAfterResultSetGet(resultSetInformation, columnLabel, value, null);
@@ -368,7 +368,7 @@ public class ResultSetWrapper extends AbstractWrapper implements ResultSet {
 
   @Override
   public byte getByte(String columnLabel) throws SQLException {
-    SQLException e = null;
+    SQLException e;
     try {
       byte value = delegate.getByte(columnLabel);
       eventListener.onAfterResultSetGet(resultSetInformation, columnLabel, value, null);
@@ -382,7 +382,7 @@ public class ResultSetWrapper extends AbstractWrapper implements ResultSet {
 
   @Override
   public short getShort(String columnLabel) throws SQLException {
-    SQLException e = null;
+    SQLException e;
     try {
       short value = delegate.getShort(columnLabel);
       eventListener.onAfterResultSetGet(resultSetInformation, columnLabel, value, null);
@@ -396,7 +396,7 @@ public class ResultSetWrapper extends AbstractWrapper implements ResultSet {
 
   @Override
   public int getInt(String columnLabel) throws SQLException {
-    SQLException e = null;
+    SQLException e;
     try {
       int value = delegate.getInt(columnLabel);
       eventListener.onAfterResultSetGet(resultSetInformation, columnLabel, value, null);
@@ -410,7 +410,7 @@ public class ResultSetWrapper extends AbstractWrapper implements ResultSet {
 
   @Override
   public long getLong(String columnLabel) throws SQLException {
-    SQLException e = null;
+    SQLException e;
     try {
       long value = delegate.getLong(columnLabel);
       eventListener.onAfterResultSetGet(resultSetInformation, columnLabel, value, null);
@@ -424,7 +424,7 @@ public class ResultSetWrapper extends AbstractWrapper implements ResultSet {
 
   @Override
   public float getFloat(String columnLabel) throws SQLException {
-    SQLException e = null;
+    SQLException e;
     try {
       float value = delegate.getFloat(columnLabel);
       eventListener.onAfterResultSetGet(resultSetInformation, columnLabel, value, null);
@@ -438,7 +438,7 @@ public class ResultSetWrapper extends AbstractWrapper implements ResultSet {
 
   @Override
   public double getDouble(String columnLabel) throws SQLException {
-    SQLException e = null;
+    SQLException e;
     try {
       double value = delegate.getDouble(columnLabel);
       eventListener.onAfterResultSetGet(resultSetInformation, columnLabel, value, null);
@@ -452,7 +452,7 @@ public class ResultSetWrapper extends AbstractWrapper implements ResultSet {
 
   @Override
   public BigDecimal getBigDecimal(String columnLabel, int scale) throws SQLException {
-    SQLException e = null;
+    SQLException e;
     try {
       BigDecimal value = delegate.getBigDecimal(columnLabel, scale);
       eventListener.onAfterResultSetGet(resultSetInformation, columnLabel, value, null);
@@ -466,7 +466,7 @@ public class ResultSetWrapper extends AbstractWrapper implements ResultSet {
 
   @Override
   public byte[] getBytes(String columnLabel) throws SQLException {
-    SQLException e = null;
+    SQLException e;
     try {
       byte[] value = delegate.getBytes(columnLabel);
       eventListener.onAfterResultSetGet(resultSetInformation, columnLabel, value, null);
@@ -480,7 +480,7 @@ public class ResultSetWrapper extends AbstractWrapper implements ResultSet {
 
   @Override
   public Date getDate(String columnLabel) throws SQLException {
-    SQLException e = null;
+    SQLException e;
     try {
       Date value = delegate.getDate(columnLabel);
       eventListener.onAfterResultSetGet(resultSetInformation, columnLabel, value, null);
@@ -494,7 +494,7 @@ public class ResultSetWrapper extends AbstractWrapper implements ResultSet {
 
   @Override
   public Time getTime(String columnLabel) throws SQLException {
-    SQLException e = null;
+    SQLException e;
     try {
       Time value = delegate.getTime(columnLabel);
       eventListener.onAfterResultSetGet(resultSetInformation, columnLabel, value, null);
@@ -508,7 +508,7 @@ public class ResultSetWrapper extends AbstractWrapper implements ResultSet {
 
   @Override
   public Timestamp getTimestamp(String columnLabel) throws SQLException {
-    SQLException e = null;
+    SQLException e;
     try {
       Timestamp value = delegate.getTimestamp(columnLabel);
       eventListener.onAfterResultSetGet(resultSetInformation, columnLabel, value, null);
@@ -522,7 +522,7 @@ public class ResultSetWrapper extends AbstractWrapper implements ResultSet {
 
   @Override
   public InputStream getAsciiStream(String columnLabel) throws SQLException {
-    SQLException e = null;
+    SQLException e;
     try {
       InputStream value = delegate.getAsciiStream(columnLabel);
       eventListener.onAfterResultSetGet(resultSetInformation, columnLabel, value, null);
@@ -536,7 +536,7 @@ public class ResultSetWrapper extends AbstractWrapper implements ResultSet {
 
   @Override
   public InputStream getUnicodeStream(String columnLabel) throws SQLException {
-    SQLException e = null;
+    SQLException e;
     try {
       InputStream value = delegate.getUnicodeStream(columnLabel);
       eventListener.onAfterResultSetGet(resultSetInformation, columnLabel, value, null);
@@ -550,7 +550,7 @@ public class ResultSetWrapper extends AbstractWrapper implements ResultSet {
 
   @Override
   public InputStream getBinaryStream(String columnLabel) throws SQLException {
-    SQLException e = null;
+    SQLException e;
     try {
       InputStream value = delegate.getBinaryStream(columnLabel);
       eventListener.onAfterResultSetGet(resultSetInformation, columnLabel, value, null);
@@ -584,7 +584,7 @@ public class ResultSetWrapper extends AbstractWrapper implements ResultSet {
 
   @Override
   public Object getObject(int columnIndex) throws SQLException {
-    SQLException e = null;
+    SQLException e;
     try {
       Object value = delegate.getObject(columnIndex);
       eventListener.onAfterResultSetGet(resultSetInformation, columnIndex, value, null);
@@ -598,7 +598,7 @@ public class ResultSetWrapper extends AbstractWrapper implements ResultSet {
 
   @Override
   public Object getObject(String columnLabel) throws SQLException {
-    SQLException e = null;
+    SQLException e;
     try {
       Object value = delegate.getObject(columnLabel);
       eventListener.onAfterResultSetGet(resultSetInformation, columnLabel, value, null);
@@ -617,7 +617,7 @@ public class ResultSetWrapper extends AbstractWrapper implements ResultSet {
 
   @Override
   public Reader getCharacterStream(int columnIndex) throws SQLException {
-    SQLException e = null;
+    SQLException e;
     try {
       Reader value = delegate.getCharacterStream(columnIndex);
       eventListener.onAfterResultSetGet(resultSetInformation, columnIndex, value, null);
@@ -631,7 +631,7 @@ public class ResultSetWrapper extends AbstractWrapper implements ResultSet {
 
   @Override
   public Reader getCharacterStream(String columnLabel) throws SQLException {
-    SQLException e = null;
+    SQLException e;
     try {
       Reader value = delegate.getCharacterStream(columnLabel);
       eventListener.onAfterResultSetGet(resultSetInformation, columnLabel, value, null);
@@ -645,7 +645,7 @@ public class ResultSetWrapper extends AbstractWrapper implements ResultSet {
 
   @Override
   public BigDecimal getBigDecimal(int columnIndex) throws SQLException {
-    SQLException e = null;
+    SQLException e;
     try {
       BigDecimal value = delegate.getBigDecimal(columnIndex);
       eventListener.onAfterResultSetGet(resultSetInformation, columnIndex, value, null);
@@ -659,7 +659,7 @@ public class ResultSetWrapper extends AbstractWrapper implements ResultSet {
 
   @Override
   public BigDecimal getBigDecimal(String columnLabel) throws SQLException {
-    SQLException e = null;
+    SQLException e;
     try {
       BigDecimal value = delegate.getBigDecimal(columnLabel);
       eventListener.onAfterResultSetGet(resultSetInformation, columnLabel, value, null);
@@ -1007,7 +1007,7 @@ public class ResultSetWrapper extends AbstractWrapper implements ResultSet {
 
   @Override
   public Object getObject(int columnIndex, Map<String, Class<?>> map) throws SQLException {
-    SQLException e = null;
+    SQLException e;
     try {
       Object value = delegate.getObject(columnIndex, map);
       eventListener.onAfterResultSetGet(resultSetInformation, columnIndex, value, null);
@@ -1021,7 +1021,7 @@ public class ResultSetWrapper extends AbstractWrapper implements ResultSet {
 
   @Override
   public Ref getRef(int columnIndex) throws SQLException {
-    SQLException e = null;
+    SQLException e;
     try {
       Ref value = delegate.getRef(columnIndex);
       eventListener.onAfterResultSetGet(resultSetInformation, columnIndex, value, null);
@@ -1035,7 +1035,7 @@ public class ResultSetWrapper extends AbstractWrapper implements ResultSet {
 
   @Override
   public Blob getBlob(int columnIndex) throws SQLException {
-    SQLException e = null;
+    SQLException e;
     try {
       Blob value = delegate.getBlob(columnIndex);
       eventListener.onAfterResultSetGet(resultSetInformation, columnIndex, value, null);
@@ -1049,7 +1049,7 @@ public class ResultSetWrapper extends AbstractWrapper implements ResultSet {
 
   @Override
   public Clob getClob(int columnIndex) throws SQLException {
-    SQLException e = null;
+    SQLException e;
     try {
       Clob value = delegate.getClob(columnIndex);
       eventListener.onAfterResultSetGet(resultSetInformation, columnIndex, value, null);
@@ -1063,7 +1063,7 @@ public class ResultSetWrapper extends AbstractWrapper implements ResultSet {
 
   @Override
   public Array getArray(int columnIndex) throws SQLException {
-    SQLException e = null;
+    SQLException e;
     try {
       Array value = delegate.getArray(columnIndex);
       eventListener.onAfterResultSetGet(resultSetInformation, columnIndex, value, null);
@@ -1077,7 +1077,7 @@ public class ResultSetWrapper extends AbstractWrapper implements ResultSet {
 
   @Override
   public Object getObject(String columnLabel, Map<String, Class<?>> map) throws SQLException {
-    SQLException e = null;
+    SQLException e;
     try {
       Object value = delegate.getObject(columnLabel, map);
       eventListener.onAfterResultSetGet(resultSetInformation, columnLabel, value, null);
@@ -1091,7 +1091,7 @@ public class ResultSetWrapper extends AbstractWrapper implements ResultSet {
 
   @Override
   public Ref getRef(String columnLabel) throws SQLException {
-    SQLException e = null;
+    SQLException e;
     try {
       Ref value = delegate.getRef(columnLabel);
       eventListener.onAfterResultSetGet(resultSetInformation, columnLabel, value, null);
@@ -1105,7 +1105,7 @@ public class ResultSetWrapper extends AbstractWrapper implements ResultSet {
 
   @Override
   public Blob getBlob(String columnLabel) throws SQLException {
-    SQLException e = null;
+    SQLException e;
     try {
       Blob value = delegate.getBlob(columnLabel);
       eventListener.onAfterResultSetGet(resultSetInformation, columnLabel, value, null);
@@ -1119,7 +1119,7 @@ public class ResultSetWrapper extends AbstractWrapper implements ResultSet {
 
   @Override
   public Clob getClob(String columnLabel) throws SQLException {
-    SQLException e = null;
+    SQLException e;
     try {
       Clob value = delegate.getClob(columnLabel);
       eventListener.onAfterResultSetGet(resultSetInformation, columnLabel, value, null);
@@ -1133,7 +1133,7 @@ public class ResultSetWrapper extends AbstractWrapper implements ResultSet {
 
   @Override
   public Array getArray(String columnLabel) throws SQLException {
-    SQLException e = null;
+    SQLException e;
     try {
       Array value = delegate.getArray(columnLabel);
       eventListener.onAfterResultSetGet(resultSetInformation, columnLabel, value, null);
@@ -1147,7 +1147,7 @@ public class ResultSetWrapper extends AbstractWrapper implements ResultSet {
 
   @Override
   public Date getDate(int columnIndex, Calendar cal) throws SQLException {
-    SQLException e = null;
+    SQLException e;
     try {
       Date value = delegate.getDate(columnIndex, cal);
       eventListener.onAfterResultSetGet(resultSetInformation, columnIndex, value, null);
@@ -1161,7 +1161,7 @@ public class ResultSetWrapper extends AbstractWrapper implements ResultSet {
 
   @Override
   public Date getDate(String columnLabel, Calendar cal) throws SQLException {
-    SQLException e = null;
+    SQLException e;
     try {
       Date value = delegate.getDate(columnLabel, cal);
       eventListener.onAfterResultSetGet(resultSetInformation, columnLabel, value, null);
@@ -1175,7 +1175,7 @@ public class ResultSetWrapper extends AbstractWrapper implements ResultSet {
 
   @Override
   public Time getTime(int columnIndex, Calendar cal) throws SQLException {
-    SQLException e = null;
+    SQLException e;
     try {
       Time value = delegate.getTime(columnIndex, cal);
       eventListener.onAfterResultSetGet(resultSetInformation, columnIndex, value, null);
@@ -1189,7 +1189,7 @@ public class ResultSetWrapper extends AbstractWrapper implements ResultSet {
 
   @Override
   public Time getTime(String columnLabel, Calendar cal) throws SQLException {
-    SQLException e = null;
+    SQLException e;
     try {
       Time value = delegate.getTime(columnLabel, cal);
       eventListener.onAfterResultSetGet(resultSetInformation, columnLabel, value, null);
@@ -1203,7 +1203,7 @@ public class ResultSetWrapper extends AbstractWrapper implements ResultSet {
 
   @Override
   public Timestamp getTimestamp(int columnIndex, Calendar cal) throws SQLException {
-    SQLException e = null;
+    SQLException e;
     try {
       Timestamp value = delegate.getTimestamp(columnIndex, cal);
       eventListener.onAfterResultSetGet(resultSetInformation, columnIndex, value, null);
@@ -1217,7 +1217,7 @@ public class ResultSetWrapper extends AbstractWrapper implements ResultSet {
 
   @Override
   public Timestamp getTimestamp(String columnLabel, Calendar cal) throws SQLException {
-    SQLException e = null;
+    SQLException e;
     try {
       Timestamp value = delegate.getTimestamp(columnLabel, cal);
       eventListener.onAfterResultSetGet(resultSetInformation, columnLabel, value, null);
@@ -1231,7 +1231,7 @@ public class ResultSetWrapper extends AbstractWrapper implements ResultSet {
 
   @Override
   public URL getURL(int columnIndex) throws SQLException {
-    SQLException e = null;
+    SQLException e;
     try {
       URL value = delegate.getURL(columnIndex);
       eventListener.onAfterResultSetGet(resultSetInformation, columnIndex, value, null);
@@ -1245,7 +1245,7 @@ public class ResultSetWrapper extends AbstractWrapper implements ResultSet {
 
   @Override
   public URL getURL(String columnLabel) throws SQLException {
-    SQLException e = null;
+    SQLException e;
     try {
       URL value = delegate.getURL(columnLabel);
       eventListener.onAfterResultSetGet(resultSetInformation, columnLabel, value, null);
@@ -1299,7 +1299,7 @@ public class ResultSetWrapper extends AbstractWrapper implements ResultSet {
 
   @Override
   public RowId getRowId(int columnIndex) throws SQLException {
-    SQLException e = null;
+    SQLException e;
     try {
       RowId value = delegate.getRowId(columnIndex);
       eventListener.onAfterResultSetGet(resultSetInformation, columnIndex, value, null);
@@ -1313,7 +1313,7 @@ public class ResultSetWrapper extends AbstractWrapper implements ResultSet {
 
   @Override
   public RowId getRowId(String columnLabel) throws SQLException {
-    SQLException e = null;
+    SQLException e;
     try {
       RowId value = delegate.getRowId(columnLabel);
       eventListener.onAfterResultSetGet(resultSetInformation, columnLabel, value, null);
@@ -1367,7 +1367,7 @@ public class ResultSetWrapper extends AbstractWrapper implements ResultSet {
 
   @Override
   public NClob getNClob(int columnIndex) throws SQLException {
-    SQLException e = null;
+    SQLException e;
     try {
       NClob value = delegate.getNClob(columnIndex);
       eventListener.onAfterResultSetGet(resultSetInformation, columnIndex, value, null);
@@ -1381,7 +1381,7 @@ public class ResultSetWrapper extends AbstractWrapper implements ResultSet {
 
   @Override
   public NClob getNClob(String columnLabel) throws SQLException {
-    SQLException e = null;
+    SQLException e;
     try {
       NClob value = delegate.getNClob(columnLabel);
       eventListener.onAfterResultSetGet(resultSetInformation, columnLabel, value, null);
@@ -1395,7 +1395,7 @@ public class ResultSetWrapper extends AbstractWrapper implements ResultSet {
 
   @Override
   public SQLXML getSQLXML(int columnIndex) throws SQLException {
-    SQLException e = null;
+    SQLException e;
     try {
       SQLXML value = delegate.getSQLXML(columnIndex);
       eventListener.onAfterResultSetGet(resultSetInformation, columnIndex, value, null);
@@ -1409,7 +1409,7 @@ public class ResultSetWrapper extends AbstractWrapper implements ResultSet {
 
   @Override
   public SQLXML getSQLXML(String columnLabel) throws SQLException {
-    SQLException e = null;
+    SQLException e;
     try {
       SQLXML value = delegate.getSQLXML(columnLabel);
       eventListener.onAfterResultSetGet(resultSetInformation, columnLabel, value, null);
@@ -1433,7 +1433,7 @@ public class ResultSetWrapper extends AbstractWrapper implements ResultSet {
 
   @Override
   public String getNString(int columnIndex) throws SQLException {
-    SQLException e = null;
+    SQLException e;
     try {
       String value = delegate.getNString(columnIndex);
       eventListener.onAfterResultSetGet(resultSetInformation, columnIndex, value, null);
@@ -1447,7 +1447,7 @@ public class ResultSetWrapper extends AbstractWrapper implements ResultSet {
 
   @Override
   public String getNString(String columnLabel) throws SQLException {
-    SQLException e = null;
+    SQLException e;
     try {
       String value = delegate.getNString(columnLabel);
       eventListener.onAfterResultSetGet(resultSetInformation, columnLabel, value, null);
@@ -1461,7 +1461,7 @@ public class ResultSetWrapper extends AbstractWrapper implements ResultSet {
 
   @Override
   public Reader getNCharacterStream(int columnIndex) throws SQLException {
-    SQLException e = null;
+    SQLException e;
     try {
       Reader value = delegate.getNCharacterStream(columnIndex);
       eventListener.onAfterResultSetGet(resultSetInformation, columnIndex, value, null);
@@ -1475,7 +1475,7 @@ public class ResultSetWrapper extends AbstractWrapper implements ResultSet {
 
   @Override
   public Reader getNCharacterStream(String columnLabel) throws SQLException {
-    SQLException e = null;
+    SQLException e;
     try {
       Reader value = delegate.getNCharacterStream(columnLabel);
       eventListener.onAfterResultSetGet(resultSetInformation, columnLabel, value, null);
@@ -1639,7 +1639,7 @@ public class ResultSetWrapper extends AbstractWrapper implements ResultSet {
 
   @Override
   public <T> T getObject(int columnIndex, Class<T> type) throws SQLException {
-    SQLException e = null;
+    SQLException e;
     try {
       T value = delegate.getObject(columnIndex, type);
       eventListener.onAfterResultSetGet(resultSetInformation, columnIndex, value, null);
@@ -1653,7 +1653,7 @@ public class ResultSetWrapper extends AbstractWrapper implements ResultSet {
 
   @Override
   public <T> T getObject(String columnLabel, Class<T> type) throws SQLException {
-    SQLException e = null;
+    SQLException e;
     try {
       T value = delegate.getObject(columnLabel, type);
       eventListener.onAfterResultSetGet(resultSetInformation, columnLabel, value, null);

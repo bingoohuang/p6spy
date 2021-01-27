@@ -1,14 +1,14 @@
 /**
  * P6Spy
- *
+ * <p>
  * Copyright (C) 2002 P6Spy
- *
+ * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -56,17 +56,17 @@ public class PreparedStatementWrapper extends StatementWrapper implements Prepar
   private final PreparedStatement delegate;
   private final PreparedStatementInformation statementInformation;
 
-  public static PreparedStatement wrap(PreparedStatement delegate, PreparedStatementInformation preparedStatementInformation, JdbcEventListener eventListener) {
+  public static PreparedStatement wrap(PreparedStatement delegate, PreparedStatementInformation p, JdbcEventListener l) {
     if (delegate == null) {
       return null;
     }
-    return new PreparedStatementWrapper(delegate, preparedStatementInformation, eventListener);
+    return new PreparedStatementWrapper(delegate, p, l);
   }
 
-  protected PreparedStatementWrapper(PreparedStatement delegate, PreparedStatementInformation preparedStatementInformation, JdbcEventListener eventListener) {
-    super(delegate, preparedStatementInformation, eventListener);
+  protected PreparedStatementWrapper(PreparedStatement delegate, PreparedStatementInformation p, JdbcEventListener l) {
+    super(delegate, p, l);
     this.delegate = delegate;
-    statementInformation = preparedStatementInformation;
+    statementInformation = p;
   }
 
   @Override
